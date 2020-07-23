@@ -1,0 +1,90 @@
+---
+- name: backup common config files on all hosts
+  hosts: mongodb-node:mysql-node:springboot_cloud-node 
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+  - name: require backup_dir to be set on command line
+    fail: msg="\' --extra-vars \"backup_dir=...\" \' must be given on command line"
+    when: backup_dir is not defined
+
+  - name: create all backup directories for each host
+    file: path="{{backup_dir}}/{{inventory_hostname}}" state=directory
+    delegate_to: localhost
+
+  - name: backup common config files
+    synchronize:
+        mode: "pull"
+        src: "{{ item }}"
+        dest: "{{backup_dir}}/{{inventory_hostname}}"
+        archive: "yes"
+        recursive: "yes"
+        rsync_opts:
+            - "--relative"
+    with_items: "{{ common_config_files }}"
+
+#############################
+
+- name: backup mysql specific config files
+  hosts: mongodb-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: backup mongodb config files
+    synchronize:
+        mode: "pull"
+        src: "{{ item }}"
+        dest: "{{backup_dir}}/{{inventory_hostname}}"
+        archive: "yes"
+        recursive: "yes"
+        rsync_opts:
+            - "--relative"
+    with_items: "{{ mongodb_config_files }}"
+
+#############################
+
+- name: backup mysql node specific config files
+  hosts: mysql-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: backup mysql config files
+    synchronize:
+        mode: "pull"
+        src: "{{ item }}"
+        dest: "{{backup_dir}}/{{inventory_hostname}}"
+        archive: "yes"
+        recursive: "yes"
+        rsync_opts:
+            - "--relative"
+    with_items: "{{ mysql_config_files }}"
+
+#############################
+
+- name: backup springboot_cloud specific config files
+  hosts: springboot_cloud-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: backup springboot_cloud config files
+    synchronize:
+        mode: "pull"
+        src: "{{ item }}"
+        dest: "{{backup_dir}}/{{inventory_hostname}}"
+        archive: "yes"
+        recursive: "yes"
+        rsync_opts:
+            - "--relative"
+    with_items: "{{ springboot_cloud_config_files }}"
+

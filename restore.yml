@@ -1,0 +1,75 @@
+---
+- name: restore common config files on all hosts
+  hosts: mongodb-node:mysql-node:springboot_cloud-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: restore common config files
+    synchronize:
+        mode: "push"
+        src: "{{backup_dir}}/{{inventory_hostname}}{{item}}"
+        dest: "{{ item }}"
+        archive: "yes"
+        recursive: "yes"
+    with_items: "{{ common_config_files }}"
+
+#############################
+
+- name: restore mongodb-node specific config files
+  hosts: mongodb-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: restore mongodb-node config files
+    synchronize:
+        mode: "push"
+        src: "{{backup_dir}}/{{inventory_hostname}}{{item}}"
+        dest: "{{ item }}"
+        archive: "yes"
+        recursive: "yes"
+    with_items: "{{ mongodb_config_files }}"
+
+#############################
+
+- name: restore mysql-node specific config files
+  hosts: mysql-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: restore mysql-node config files
+    synchronize:
+        mode: "push"
+        src: "{{backup_dir}}/{{inventory_hostname}}{{item}}"
+        dest: "{{ item }}"
+        archive: "yes"
+        recursive: "yes"
+    with_items: "{{ mysql_config_files }}"
+
+#############################
+
+- name: restore springboot_cloud specific config files
+  hosts: springboot_cloud-node
+
+  vars_files:
+  - backup_file_list.yml
+
+  tasks:
+
+  - name: restore springboot_cloud config files
+    synchronize:
+        mode: "push"
+        src: "{{backup_dir}}/{{inventory_hostname}}{{item}}"
+        dest: "{{ item }}"
+        archive: "yes"
+        recursive: "yes"
+    with_items: "{{ springboot_cloud_config_files }}"
+

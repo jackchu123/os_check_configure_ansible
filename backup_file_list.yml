@@ -1,0 +1,19 @@
+common_config_files:
+    [
+        "/etc/network/interfaces",
+        "/etc/network/interfaces.d",
+        "/etc/hosts",
+        "/etc/hostname"
+    ]
+mongodb_config_files:
+    [
+    ]
+mysql_config_files:
+    [
+    ]
+springboot_cloud_config_files:
+    [
+    ]
+
+
+
