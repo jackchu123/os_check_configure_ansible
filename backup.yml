@@ -1,6 +1,7 @@
 ---
 - name: backup common config files on all hosts
-  hosts: mongodb-node:mysql-node:springboot_cloud-node 
+  #hosts: mongodb-node:mysql-node:springboot_cloud-node 
+  hosts: all-node
 
   vars_files:
   - backup_file_list.yml
