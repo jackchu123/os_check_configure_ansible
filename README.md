@@ -52,5 +52,12 @@ sh example-backup.sh
 sh example-restore.sh
 ```
 
+- 指定节点修改性能配置
+
+```
+# 具体配置请查看os_performance_configure.sh脚本，当前SQL节点尚未完成，等待后续添加
+sh example-performance.sh
+```
+
 ### 其它
 - 节点信息备份脚本使用了[ansible-cmdb](https://github.com/fboender/ansible-cmdb)模块，详细使用方式请查看官方github
