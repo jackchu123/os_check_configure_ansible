@@ -4,3 +4,7 @@
 
 [springboot_cloud-node]
 
+[all-node:children]
+mongodb-node
+mysql-node
+springboot_cloud-node
