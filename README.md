@@ -50,3 +50,6 @@ sh example-backup.sh
 ```
 sh example-restore.sh
 ```
+
+### 其它
+- 节点信息备份脚本使用了[ansible-cmdb](https://github.com/fboender/ansible-cmdb)模块，详细使用方式请查看官方github
