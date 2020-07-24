@@ -28,7 +28,7 @@
 
 #############################
 
-- name: backup mysql specific config files
+- name: backup mongodb specific config files
   hosts: mongodb-node
 
   vars_files:
