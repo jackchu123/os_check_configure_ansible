@@ -1,0 +1,38 @@
+---
+- name: default configure
+  hosts: all-node
+
+  tasks:
+  - name: all-node deploy default configure
+    copy: src=./os_performance_configure.sh dest=/tmp/os_performance_configure.sh
+    shell: "bash /tmp/os_performance_configure.sh 1"
+
+#############################
+
+- name: mongodb configure
+  hosts: mongodb-node
+
+  tasks:
+  - name: mongodb-node deploy configure
+    copy: src=./os_performance_configure.sh dest=/tmp/os_performance_configure.sh
+    shell: "bash /tmp/os_performance_configure.sh 3"
+
+#############################
+
+- name: mysql configure
+  hosts: mysql-node
+
+  tasks:
+  - name: mysql-node deploy configure
+    copy: src=./os_performance_configure.sh dest=/tmp/os_performance_configure.sh
+    shell: "bash /tmp/os_performance_configure.sh 3"
+
+#############################
+
+- name: springboot_cloud 
+  hosts: springboot_cloud-node
+
+  tasks:
+  - name: springboot_cloud-node deploy configure
+    copy: src=./os_performance_configure.sh dest=/tmp/os_performance_configure.sh
+    shell: "bash /tmp/os_performance_configure.sh 2"
